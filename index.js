@@ -1,27 +1,29 @@
-//GET request
-const submitData = function(userName, userEmail) {
-    const userInfo = {
-        name: userName,
-        email: userEmail
-    };
-    try {
-        return fetch('http://localhost:3000/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(userInfo)
-        }).then((response) => {
-            return response.json();
-        }).then((jsonData) => {
-            return document.body.innerHTML = jsonData.id
-        }).catch((err) => {
-            document.body.innerHTML = err.message;
-        });
-    } catch(err) {
-        console.log('Error fetching dada from servers');
-    }
-}
+// Add your code here
 
-submitData('Jim', 'jim@jim.com');
+function submitData(userName, userEmail) {
+    const configObj = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+        body: JSON.stringify({
+            name: userName,
+            email: userEmail,
+        })
+    }
+    return fetch('http://localhost:3000/users', configObj)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data.id);
+        
+        const p = document.createElement('p');
+        document.body.innerHTML = data.id;
+        
+    })
+    .catch(error => {
+        alert('Oh no, it\'s not working!');
+        console.log(error.message);
+        document.body.innerHTML = error.message;
+    })
+}
